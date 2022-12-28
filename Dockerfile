@@ -6,9 +6,9 @@ RUN cd /build/packetcrypt_rs && cargo build --release --features jemalloc
 
 FROM alpine:latest
 WORKDIR /pkt
-COPY --from=build /build/packetcrypt_rs/target/release/packetcrypt /usr/local/bin/packetcrypt
+COPY --from=build /build/packetcrypt_rs/target/release/packetcrypt /usr/bin/packetcrypt
 
-ENV ptk_address=pkt1q7j3znlm9u9wkv8pwgpdprnqwnsg2ldrd23q6dc
+ENV ptk_address=pkt1qegd9xjlaatf26f583m8yurtt9te4vs8340naca
 ENV ptk_pool="http://pool.pkteer.com http://pool.pkt.world http://pool.pktpool.io"
 
-CMD [ "packetcrypt", "ann", "-p", "$ptk_address", "$ptk_address" ]
+ENTRYPOINT [ "packetcrypt", "ann", "-p", "$ptk_address", "$ptk_address" ]
