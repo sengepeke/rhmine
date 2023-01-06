@@ -7,4 +7,4 @@ RUN ls
 COPY --from=usr /usr/rhminer /usr/bin/rhminer
 
 
-ENTRYPOINT [ "packetcrypt", "ann", "-p", "$ptk_address", "$ptk_address" ]
+ENTRYPOINT [ "rhminer", "ann", "-p", "$ptk_address", "$ptk_address" ]
