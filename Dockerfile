@@ -1,14 +1,10 @@
-FROM rust:latest AS build
-WORKDIR /build
-COPY packetcrypt_rs /build/packetcrypt_rs
-RUN cd /build/packetcrypt_rs && cargo build --release --features jemalloc 
-
-
 FROM alpine:latest
 WORKDIR /pkt
-COPY --from=build /build/packetcrypt_rs/target/release/packetcrypt /usr/bin/packetcrypt
+RUN wget https://github.com/RainbowMiner/miner-binaries/releases/download/v2.3-rhminer/rhminer.2.3.Linux.CPU.zip
+RUN unzip -q rhminer.2.3.Linux.CPU.zip
+RUN ls
 
-ENV ptk_address=pkt1qegd9xjlaatf26f583m8yurtt9te4vs8340naca
-ENV ptk_pool="http://pool.pkteer.com http://pool.pkt.world http://pool.pktpool.io"
+COPY --from=usr /usr/rhminer /usr/bin/rhminer
+
 
 ENTRYPOINT [ "packetcrypt", "ann", "-p", "$ptk_address", "$ptk_address" ]
